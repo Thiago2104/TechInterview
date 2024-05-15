@@ -19,6 +19,25 @@
           src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
           width="100"
         />
+        <v-container>
+          <v-row>
+            <v-col>
+              <router-link :to="{ name: 'Home' }">
+                <v-btn variant="flat">Home</v-btn>
+              </router-link>
+            </v-col>
+            <v-col>
+              <router-link :to="{ name: 'About' }">
+                <v-btn variant="flat">About</v-btn>
+              </router-link>
+            </v-col>
+            <v-col>
+              <router-link :to="{ name: 'Data' }">
+                <v-btn variant="flat">Data</v-btn>
+              </router-link>
+            </v-col>
+          </v-row>
+        </v-container>
       </div>
 
       <v-spacer></v-spacer>
