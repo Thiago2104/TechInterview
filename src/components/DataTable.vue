@@ -13,7 +13,7 @@
             when complete.
           </p></v-card-subtitle
         >
-        <v-data-table> </v-data-table>
+        <v-data-table :headers="headers" :items="data"> </v-data-table>
       </v-card>
     </v-row>
     <v-row> </v-row>
@@ -21,7 +21,42 @@
 </template>
 
 <script>
+import getAllData from "../services/getAllData.js";
+
 export default {
-  data: () => ({}),
+  data() {
+    return {
+      headers: [],
+      users: [],
+      error: null,
+      load: null,
+    };
+  },
+  mounted() {
+    const { load } = getAllData();
+    load()
+      .then((data) => {
+        this.data = data.users;
+        // Get all keys from the data, and format them as column names by removing '_' and capitalizing each word
+        this.headers = Object.keys(this.data[0]).map((key) => {
+          const formattedKey = key
+            .split("_")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+          return { text: formattedKey, value: key };
+        });
+        console.log(this.data);
+        /* Note: This could expose sensitive data or data out of interest; consider filtering or formatting the data on the backend, and if not possible, make a list of the desired headers to be shown. For example:
+        headers: [
+          { text: "ID", value: "ID" },
+          { text: "First Name", value: "first_name" },
+          { text: "Last Name", value: "last_name" },
+        ],
+        */
+      })
+      .catch((err) => {
+        this.error = err;
+      });
+  },
 };
 </script>
