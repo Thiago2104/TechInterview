@@ -15,4 +15,9 @@ if (process.env.NODE_ENV === "production") {
 module.exports = {
   ...config,
   transpileDependencies: ["vuetify"],
+  pwa: {
+    name: "Tech Interview",
+    themeColor: "#8a07fa",
+    backgroundColor: "#b176ff",
+  },
 };
