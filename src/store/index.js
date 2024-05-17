@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
   state: {
     users: [],
     loading: false,
+    error: null,
   },
   mutations: {
     setUserData(state, userData) {
@@ -17,6 +18,9 @@ export const store = new Vuex.Store({
     setLoading(state, loading) {
       state.loading = loading;
     },
+    setError(state, error) {
+      state.error = error;
+    },
   },
   actions: {
     fetchUsers({ commit }) {
@@ -24,10 +28,12 @@ export const store = new Vuex.Store({
       load()
         .then((response) => {
           commit("setUserData", response);
+          commit("setError", null);
         })
         .catch((e) => {
           console.log(e);
           commit("setLoading", false);
+          commit("setError", e);
         });
     },
   },

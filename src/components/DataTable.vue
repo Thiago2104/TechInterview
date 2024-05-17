@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-row v-if="error">
+      <v-alert type="error">{{ error }}</v-alert>
+    </v-row>
     <v-row>
       <v-card>
         <v-card-title> Data Table </v-card-title>
@@ -61,6 +64,9 @@ export default {
           .join(" ");
         return { text: formattedKey, value: key };
       });
+    },
+    error() {
+      return this.$store.state.error;
     },
   },
   mounted() {

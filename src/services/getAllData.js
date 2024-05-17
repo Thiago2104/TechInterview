@@ -2,12 +2,19 @@ const APIURL = "https://random-data-api.com/api/v2/users?size=90";
 
 export const load = async () => {
   try {
-    let data = await fetch(APIURL);
-    if (!data.ok) {
-      throw Error("no data available");
+    const response = await Promise.race([
+      fetch(APIURL),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Timeout occurred")), 3000)
+      ),
+    ]);
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
-    return await data.json();
+    return await response.json();
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    throw new Error("Error fetching data");
   }
 };
